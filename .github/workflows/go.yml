@@ -32,12 +32,25 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Build frontend image
-        run: docker build -t magnusthomsen/sfc_frontend:latest -f ./Dockerfile_frontend .
-      - name: Build backend image
-        run: docker build -t magnusthomsen/sfc_backend:latest -f ./Dockerfile_backend .
-      - name: Push to Docker Hub
-        run: |
-          docker login -u ${{ vars.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-          docker push magnusthomsen/sfc_frontend:latest
-          docker push magnusthomsen/sfc_backend:latest
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push frontend image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile_frontend
+          push: true
+          tags: magnusthomsen/sfc_frontend:latest
+
+      - name: Build and push backend image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile_backend
+          push: true
+          tags: magnusthomsen/sfc_backend:latest
