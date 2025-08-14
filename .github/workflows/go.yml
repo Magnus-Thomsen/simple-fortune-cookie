@@ -75,6 +75,6 @@ jobs:
           compose-file: ./compose.yaml
           up-flags: "--build"
           down-flags: "--volumes"
-          test-container: "frontend_container" # must match container name in docker-compose.yml
+          test-container: "frontend" # must match container name in docker-compose.yml
           test-command: "curl -s -o /dev/null -w '%{http_code}' http://localhost:8080/healthz"
           annotate: "false"
