@@ -32,6 +32,8 @@ jobs:
     steps:
       - name: Build frontend image
         run: docker build . -t magnusthomsen/sfc_frontend:latest
+        with:
+          context: .
       - name: Build backend image
         run: docker build -t magnusthomsen/sfc_backend:latest -f ./Dockerfile_backend .
       - name: Push to Docker Hub
