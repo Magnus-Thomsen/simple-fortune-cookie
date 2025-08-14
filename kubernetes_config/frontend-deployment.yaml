@@ -14,7 +14,7 @@ spec:
         app: frontend-deployment
     spec:
       containers:
-        - name: frontend
+        - name: frontend-container
           image: magnusthomsen/sfc_frontend:latest
           resources:
             limits:
@@ -24,4 +24,4 @@ spec:
           - containerPort: 8080
           env:
             - name: BACKEND_DNS
-              value: backend_container
+              value: backend-container

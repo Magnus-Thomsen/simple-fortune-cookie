@@ -14,7 +14,7 @@ spec:
         app: backend-deployment
     spec:
       containers:
-        - name: backend_container
+        - name: backend-container
           image: magnusthomsen/sfc_backend:latest
           resources:
             limits:
