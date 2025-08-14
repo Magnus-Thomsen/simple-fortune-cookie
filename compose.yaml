@@ -8,7 +8,7 @@ services:
     image: magnusthomsen/sfc_frontend:latest
 #    build:
 #      context: .
-#      dockerfile: Dockerfile
+#      dockerfile: Dockerfile_frontend
     environment:
       - BACKEND_DNS=backend_container
     ports:

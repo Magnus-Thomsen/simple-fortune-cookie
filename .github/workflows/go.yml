@@ -33,7 +33,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Build frontend image
-        run: docker build . -t magnusthomsen/sfc_frontend:latest
+        run: docker build -t magnusthomsen/sfc_frontend:latest -f ./Dockerfile_frontend .
       - name: Build backend image
         run: docker build -t magnusthomsen/sfc_backend:latest -f ./Dockerfile_backend .
       - name: Push to Docker Hub
