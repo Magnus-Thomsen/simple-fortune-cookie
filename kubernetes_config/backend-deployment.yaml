@@ -22,4 +22,6 @@ spec:
               cpu: "500m"
           ports:
           - containerPort: 9000
-
+          env:
+            - name: REDIS_DNS
+              value: redis-service
