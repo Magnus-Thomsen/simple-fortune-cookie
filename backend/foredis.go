@@ -10,7 +10,7 @@ import (
 )
 
 var dbLink redis.Conn
-var usingRedis = false
+var usingRedis = true
 
 func init() {
 	// Check if REDIS_DNS environment variable is set
