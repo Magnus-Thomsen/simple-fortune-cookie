@@ -10,7 +10,7 @@ services:
 #      context: .
 #      dockerfile: Dockerfile_frontend
     environment:
-      - BACKEND_DNS=backend_container
+      - BACKEND_DNS=backend
     ports:
       - "8080:8080"
     healthcheck:
@@ -28,7 +28,7 @@ services:
 #      context: .
 #      dockerfile: Dockerfile_backend
     environment:
-      - REDIS_DNS=redis_container
+      - REDIS_DNS=redis
     ports:
       - "9000:9000"
 
