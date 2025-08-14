@@ -5,18 +5,20 @@ services:
     container_name: frontend_container
     depends_on:
       - backend
-    build:
-      context: .
-      dockerfile: Dockerfile_frontend
+    image: magnusthomsen/sfc_frontend:latest
+#    build:
+#      context: .
+#      dockerfile: Dockerfile_frontend
     environment:
       - BACKEND_DNS=backend_container
     ports:
       - "8080:8080"
   backend:
     container_name: backend_container
-    build:
-      context: .
-      dockerfile: Dockerfile_backend
+    image: magnusthomsen/sfc_backend:latest
+#    build:
+#      context: .
+#      dockerfile: Dockerfile_backend
     ports:
       - "9000:9000"
 
