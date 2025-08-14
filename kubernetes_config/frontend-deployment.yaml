@@ -24,4 +24,4 @@ spec:
           - containerPort: 8080
           env:
             - name: BACKEND_DNS
-              value: backend-container
+              value: backend-service
