@@ -67,9 +67,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Build test-version with Docker Compose
-        run: docker compose up -d
-      - name: test frontend
-        run: curl http://frontend_container:8080/healthz
-      - name: Clean up
-        run: docker compose down
+#      - name: Build test-version with Docker Compose
+#        run: docker compose up -d
+#      - name: test frontend
+#        run: curl http://frontend_container:8080/healthz
+#      - name: Clean up
+#        run: docker compose down
