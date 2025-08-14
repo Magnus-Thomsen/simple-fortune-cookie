@@ -66,6 +66,7 @@ jobs:
       - run: echo "${{ secrets.KUBECONFIG }}" | base64 -d > kubeconfig
       - run: kubectl --kubeconfig kubeconfig apply -f ./kubernetes_config
   test-availability:
+    needs: [deploy]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
