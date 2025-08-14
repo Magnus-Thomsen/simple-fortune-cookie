@@ -30,10 +30,10 @@ jobs:
   publish_images:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Build frontend image
         run: docker build . -t magnusthomsen/sfc_frontend:latest
-        with:
-          context: .
       - name: Build backend image
         run: docker build -t magnusthomsen/sfc_backend:latest -f ./Dockerfile_backend .
       - name: Push to Docker Hub
