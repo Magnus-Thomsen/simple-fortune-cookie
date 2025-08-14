@@ -72,10 +72,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Build test-version with Docker Compose
-        run: docker compose up -d --wait
-      - name: curl
-        uses: sozo-design/curl@v1.0.2
-        with:
-          args: http://localhost:8080/healthz
+        run: |
+            docker compose up -d --wait 
+            curl http://localhost:8080/healthz
       - name: Clean up
         run: docker compose down
