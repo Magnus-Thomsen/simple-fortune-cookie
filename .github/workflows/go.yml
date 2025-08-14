@@ -62,14 +62,14 @@ jobs:
       - run: echo "${{ secrets.KUBECONFIG }}" | base64 -d > kubeconfig
       - run: kubectl --kubeconfig kubeconfig apply -f ./kubernetes_config
   test-availability:
-    runs-on: ubuntu:latest
+    runs-on: ubuntu-latest
     needs: [deploy]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-#      - name: Build test-version with Docker Compose
-#        run: docker compose up -d
-#      - name: test frontend
-#        run: curl http://frontend_container:8080/healthz
-#      - name: Clean up
-#        run: docker compose down
+      - name: Build test-version with Docker Compose
+        run: docker compose up -d
+      - name: test frontend
+        run: curl http://frontend_container:8080/healthz
+      - name: Clean up
+        run: docker compose down
