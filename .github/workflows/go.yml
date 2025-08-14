@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Build frontend image
-        run: docker build -t magnusthomsen/sfc_frontend:latest -f ./Dockerfile_frontend .
+        run: docker build . -t magnusthomsen/sfc_frontend:latest
       - name: Build backend image
         run: docker build -t magnusthomsen/sfc_backend:latest -f ./Dockerfile_backend .
       - name: Push to Docker Hub
