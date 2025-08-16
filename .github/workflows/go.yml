@@ -113,7 +113,7 @@ jobs:
       - run: echo "${{ secrets.KUBECONFIG }}" | base64 -d > kubeconfig
       - run: kubectl --kubeconfig kubeconfig apply -f ./kubernetes_config
       - run: curl http://16.16.209.64:32218/healthz
-  test-availability:
+  test-availability-and-siege-engine-stress-test:
     runs-on: ubuntu-latest
     needs: [deploy]
     steps:
@@ -123,5 +123,8 @@ jobs:
         run: |
             docker compose up -d --wait 
             curl http://localhost:8080/healthz
+      - name: Stress test with siege-engine
+        run: |
+            docker run --rm rufus/siege-engine -c 10 -t 30s http://localhost:8080/
       - name: Clean up
         run: docker compose down
