@@ -26,6 +26,17 @@ jobs:
       run: |
         cd ./frontend
         go test frontend
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup go
+        uses: actions/setup-go@v5
+        with:
+          go-version: stable
+      - name: Run linting
+        uses: golangci/golangci-lint-action@v8
   publish_images:
     runs-on: ubuntu-latest
     steps:
