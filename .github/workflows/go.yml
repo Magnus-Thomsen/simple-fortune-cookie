@@ -43,7 +43,38 @@ jobs:
         uses: golangci/golangci-lint-action@v8
         with:
           working-directory: backend
+  trivy-scan:
+    runs-on: ubuntu-latest
+    needs: [build, linting]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build frontend image from Dockerfile
+        run: docker build -f Dockerfile_frontend -t magnusthomsen/sfc_frontend:latest .
+      - name: Run Trivy vulnerability scanner on frontend 
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: 'magnusthomsen/sfc_frontend:latest'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+        
+      - name: Build backend image from Dockerfile
+        run: docker build -f Dockerfile_backend -t magnusthomsen/sfc_backend:latest .
+      - name: Run Trivy vulnerability scanner on backend 
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: 'magnusthomsen/sfc_backend:latest'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
   publish_images:
+    needs: [build, linting, trivy-scan]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -54,7 +85,6 @@ jobs:
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
       - name: Build and push frontend image
         uses: docker/build-push-action@v6
         with:
