@@ -51,7 +51,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build frontend image from Dockerfile
-        run: docker build -f Dockerfile_frontend -t magnusthomsen/sfc_frontend:latest
+        run: docker build -f Dockerfile_frontend -t magnusthomsen/sfc_frontend:latest .
       - name: Run Trivy vulnerability scanner on frontend 
         uses: aquasecurity/trivy-action@0.28.0
         with:
@@ -63,7 +63,7 @@ jobs:
           severity: 'CRITICAL,HIGH'
         
       - name: Build backend image from Dockerfile
-        run: docker build -f Dockerfile_backend -t magnusthomsen/sfc_backend:latest
+        run: docker build -f Dockerfile_backend -t magnusthomsen/sfc_backend:latest .
       - name: Run Trivy vulnerability scanner on backend 
         uses: aquasecurity/trivy-action@0.28.0
         with:
