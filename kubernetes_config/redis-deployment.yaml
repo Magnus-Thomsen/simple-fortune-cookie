@@ -13,6 +13,10 @@ spec:
       labels:
         app: redis-deployment
     spec:
+      volumes:
+        - name: redis-pvc
+          persistentVolumeClaim:
+            claimName: redis-pvc
       containers:
         - name: redis-container
           image: redis:latest
@@ -22,4 +26,6 @@ spec:
               cpu: "500m"
           ports:
           - containerPort: 6379
-
+          volumeMounts:
+            - name: redis-pvc
+              mountPath: "/mnt/data/redis"
