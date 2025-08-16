@@ -48,7 +48,6 @@ func main() {
 		json.NewDecoder(resp.Body).Decode(f)
 
 		fmt.Fprint(w, f.Message)
-		return
 	})
 
 	http.HandleFunc("/api/all", func(w http.ResponseWriter, r *http.Request) {
@@ -71,7 +70,6 @@ func main() {
 		}
 
 		tmpl.Execute(w, fortunes)
-		return
 	})
 
 	http.HandleFunc("/api/add", func(w http.ResponseWriter, r *http.Request) {
@@ -95,8 +93,6 @@ func main() {
 		}
 
 		fmt.Fprint(w, "Cookie added!")
-
-		return
 	})
 
 	http.Handle("/", http.FileServer(http.Dir("./static")))
