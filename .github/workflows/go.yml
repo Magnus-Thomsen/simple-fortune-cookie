@@ -114,7 +114,7 @@ jobs:
         run: |
             docker compose up -d --wait 
             curl http://localhost:8080/healthz
-            docker run --rm rufus/siege-engine -c 10 -t 30s http://localhost:8080/
+            docker run --rm --network=host rufus/siege-engine -c 10 -t 30s http://localhost:8080/
       - name: Clean up
         run: docker compose down
   deploy:
