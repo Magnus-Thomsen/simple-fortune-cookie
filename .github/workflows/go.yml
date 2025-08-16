@@ -85,13 +85,30 @@ jobs:
         with:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            magnusthomsen/sfc_frontend
+            magnusthomsen/sfc_backend
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
+
       - name: Build and push frontend image
         uses: docker/build-push-action@v6
         with:
           context: .
           file: Dockerfile_frontend
           push: true
-          tags: magnusthomsen/sfc_frontend:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=magnusthomsen/sfc_frontend:latest
           cache-to: type=inline
 
@@ -101,9 +118,11 @@ jobs:
           context: .
           file: Dockerfile_backend
           push: true
-          tags: magnusthomsen/sfc_backend:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=magnusthomsen/sfc_backend:latest
           cache-to: type=inline
+
   availability-and-stress-test:
     runs-on: ubuntu-latest
     needs: [publish_images]
