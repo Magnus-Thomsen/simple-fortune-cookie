@@ -59,7 +59,7 @@ jobs:
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
-          vuln-type: 'os, library'
+          vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
         
       - name: Build backend image from Dockerfile
@@ -71,7 +71,7 @@ jobs:
           format: 'table'
           exit-code: '1'
           ignore-unfixed: true
-          vuln-type: 'os, library'
+          vuln-type: 'os,library'
           severity: 'CRITICAL,HIGH'
   publish_images:
     needs: [build, linting, trivy-scan]
