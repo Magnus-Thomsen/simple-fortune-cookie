@@ -35,8 +35,14 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: stable
-      - name: Run linting
+      - name: Run linting on frontend
         uses: golangci/golangci-lint-action@v8
+        with:
+          working-directory: frontend
+      - name: Run linting on backend
+        uses: golangci/golangci-lint-action@v8
+        with:
+          working-directory: backend
   publish_images:
     runs-on: ubuntu-latest
     steps:
