@@ -86,12 +86,26 @@ jobs:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Docker meta
-        id: meta
+      - name: Docker meta frontend
+        id: meta-frontend
         uses: docker/metadata-action@v5
         with:
           images: |
             magnusthomsen/sfc_frontend
+          # generate Docker tags based on the following events/attributes
+          tags: |
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=semver,pattern={{major}}
+            type=sha
+            type=raw,value=latest
+
+      - name: Docker meta backend
+        id: meta-backend
+        uses: docker/metadata-action@v5
+        with:
+          images: |
             magnusthomsen/sfc_backend
           # generate Docker tags based on the following events/attributes
           tags: |
@@ -108,8 +122,8 @@ jobs:
           context: .
           file: Dockerfile_frontend
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta-frontend.outputs.tags }}
+          labels: ${{ steps.meta-frontend.outputs.labels }}
           cache-from: type=registry,ref=magnusthomsen/sfc_frontend:latest
           cache-to: type=inline
 
@@ -119,8 +133,8 @@ jobs:
           context: .
           file: Dockerfile_backend
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ steps.meta-backend.outputs.tags }}
+          labels: ${{ steps.meta-backend.outputs.labels }}
           cache-from: type=registry,ref=magnusthomsen/sfc_backend:latest
           cache-to: type=inline
 
